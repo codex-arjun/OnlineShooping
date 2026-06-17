@@ -67,7 +67,7 @@ public class ProductService {
 
     @PostConstruct
     public void populateSampleData() {
-        if (categoryRepository.count() == 0 || productRepository.count() < 18) {
+        if (categoryRepository.count() == 0 || productRepository.count() < 34) {
             // Start clean to ensure all expanded items load correctly
             cartItemRepository.deleteAll();
             orderRepository.deleteAll();
@@ -78,6 +78,7 @@ public class ProductService {
             Category pants = categoryRepository.save(new Category("Pants"));
             Category dresses = categoryRepository.save(new Category("Dresses"));
             Category jackets = categoryRepository.save(new Category("Jackets"));
+            Category shoes = categoryRepository.save(new Category("Shoes"));
 
             // Men's Products (8 items)
             productRepository.save(new Product(
@@ -273,6 +274,160 @@ public class ProductService {
                     "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400",
                     40,
                     shirts
+            ));
+
+            // Men's Shoes (10 items)
+            productRepository.save(new Product(
+                    "Men's Classic Leather Loafers",
+                    "Premium Italian leather slip-on loafers, perfect for office or smart-casual styles.",
+                    89.99,
+                    "Male",
+                    "M",
+                    "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&q=80&w=400",
+                    25,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Urban Street Sneakers",
+                    "Contemporary design urban sneakers with thick rubber soles and breathable upper mesh.",
+                    65.00,
+                    "Male",
+                    "L",
+                    "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=400",
+                    40,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Waterproof Hiking Boots",
+                    "Rugged hiking boots featuring waterproof membrane and deep tread pattern for tracking.",
+                    110.00,
+                    "Male",
+                    "L",
+                    "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&q=80&w=400",
+                    20,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Premium Running Shoes",
+                    "Engineered for high performance, featuring impact absorption and flyknit lightweight weave.",
+                    95.00,
+                    "Male",
+                    "M",
+                    "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=400",
+                    35,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Formal Oxford Dress Shoes",
+                    "Handcrafted premium calfskin leather Oxford lace-up dress shoes in mahogany brown.",
+                    129.99,
+                    "Male",
+                    "L",
+                    "https://images.unsplash.com/photo-1531310197839-ccf54634509e?auto=format&fit=crop&q=80&w=400",
+                    15,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Lightweight Canvas Slip-ons",
+                    "Casual summer canvas slip-ons with soft padded insoles and durable canvas material.",
+                    29.99,
+                    "Male",
+                    "M",
+                    "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&q=80&w=400",
+                    50,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Leather Chelsea Boots",
+                    "Sleek suede leather Chelsea boots in sand beige with elastic side panels.",
+                    119.99,
+                    "Male",
+                    "XL",
+                    "https://images.unsplash.com/photo-1618453292459-53424b66bb6a?auto=format&fit=crop&q=80&w=400",
+                    15,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Cushioned Athletic Trainer",
+                    "Cross-training gym shoes featuring high-grip outsoles and responsive foam padding.",
+                    75.00,
+                    "Male",
+                    "L",
+                    "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&q=80&w=400",
+                    30,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's Summer Cork Sandals",
+                    "Ergonomic cork footbed double-strap slides in dark tan suede.",
+                    39.99,
+                    "Male",
+                    "M",
+                    "https://images.unsplash.com/photo-1603487742131-4160ec999306?auto=format&fit=crop&q=80&w=400",
+                    35,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Men's High-Top Basketball Shoes",
+                    "Retro high-top basketball shoes with ankle support cushion and dual-tone colors.",
+                    85.00,
+                    "Male",
+                    "L",
+                    "https://images.unsplash.com/photo-1518002171953-a080ee81be25?auto=format&fit=crop&q=80&w=400",
+                    25,
+                    shoes
+            ));
+
+            // Women's Shoes (5 items)
+            productRepository.save(new Product(
+                    "Women's Elegant Stiletto Heels",
+                    "Sophisticated high stiletto pumps in velvet red, perfect for dress codes and evenings.",
+                    79.99,
+                    "Female",
+                    "S",
+                    "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400",
+                    20,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Women's Knit Walking Flats",
+                    "Eco-friendly woven knit walking flats with flexible rubber soles for daily commute.",
+                    45.00,
+                    "Female",
+                    "M",
+                    "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=400",
+                    40,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Women's Cozy Fleece Winter Boots",
+                    "Water-resistant warm winter boots lined with cozy faux fur fleece shearling.",
+                    95.00,
+                    "Female",
+                    "M",
+                    "https://images.unsplash.com/photo-1605733513597-a8f8d410fe3c?auto=format&fit=crop&q=80&w=400",
+                    18,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Women's Platform Casual Sneakers",
+                    "Retro platform white sneakers featuring pastel highlights and lace details.",
+                    59.99,
+                    "Female",
+                    "S",
+                    "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&q=80&w=400",
+                    30,
+                    shoes
+            ));
+            productRepository.save(new Product(
+                    "Women's Leather Ankle Booties",
+                    "Chic side-zip genuine leather ankle booties with a low block heel in classic black.",
+                    89.99,
+                    "Female",
+                    "M",
+                    "https://images.unsplash.com/photo-1535043934128-cf0b28d52f95?auto=format&fit=crop&q=80&w=400",
+                    22,
+                    shoes
             ));
         }
     }

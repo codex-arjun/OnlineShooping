@@ -69,6 +69,14 @@ function App() {
   });
   const [assistanceSuccess, setAssistanceSuccess] = useState(false);
 
+  // Floating Live Chat Widget State
+  const [isSupportChatOpen, setIsSupportChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { id: 1, sender: 'bot', text: "Hello! I am Aura's Customer Support Assistant. How can I help you today? Ask me about orders, return policies, card discounts, or our new Shoes category!", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
+  ]);
+  const [chatInput, setChatInput] = useState('');
+  const [isChatTyping, setIsChatTyping] = useState(false);
+
   // Admin CRUD State
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -467,6 +475,54 @@ function App() {
       }));
       setAssistanceSuccess(false);
     }, 4000);
+  };
+
+  // --- Floating Live Chat messaging system ---
+  const handleSendChatMessage = (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+
+    const userMsg = {
+      id: Date.now(),
+      sender: 'user',
+      text: chatInput,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setChatMessages(prev => [...prev, userMsg]);
+    const query = chatInput.toLowerCase();
+    setChatInput('');
+    setIsChatTyping(true);
+
+    // Simulated response logic
+    setTimeout(() => {
+      let replyText = "";
+      if (query.includes("order") || query.includes("track")) {
+        replyText = "You can track your order status live under the 'Orders' tab in the navigation bar! Your past orders are listed there with complete details.";
+      } else if (query.includes("refund") || query.includes("return")) {
+        replyText = "We offer a 30-day return policy on all unworn items. To initiate a return, please email us at sharmaarjun0206@gmail.com with your Order ID.";
+      } else if (query.includes("payment") || query.includes("card") || query.includes("upi") || query.includes("cod")) {
+        replyText = "We accept Credit/Debit Cards (Visa, Mastercard, Amex), UPI QR Code scanning (via local payment.jpeg), Net Banking, and Cash on Delivery. Card payments get automatic promotions up to 20%!";
+      } else if (query.includes("discount") || query.includes("offer")) {
+        replyText = "We offer automatic promotions for credit cards at checkout: 10% Off on Visa, 15% Off on Mastercard, and 20% Off on American Express (Amex).";
+      } else if (query.includes("size") || query.includes("fit")) {
+        replyText = "We offer sizes S, M, L, and XL. You can check the available sizes on any product card or use the 'Select Sizes' multi-select filter in our sidebar.";
+      } else if (query.includes("shoe") || query.includes("footwear")) {
+        replyText = "Yes! We just launched our brand new 'Shoes' category. You can select 'Shoes' in the category list to check out 10 premium pairs for men and 5 pairs for women.";
+      } else if (query.includes("hello") || query.includes("hi") || query.includes("hey")) {
+        replyText = "Hello! Welcome to Aura Support. How can I help you today? Ask me about orders, payments, shoe categories, or return policies!";
+      } else {
+        replyText = "Thank you for reaching out! A live customer assistance representative is being connected. In the meantime, you can contact us directly at sharmaarjun0206@gmail.com or call 9893326098.";
+      }
+
+      setChatMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: replyText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+      setIsChatTyping(false);
+    }, 1200);
   };
 
   // Toggle size filter
@@ -1057,14 +1113,14 @@ function App() {
               <div className="assistance-contact-cards">
                 <div className="contact-card">
                   <div className="contact-card-icon">📞</div>
-                  <div className="contact-card-title">Toll-Free Helpline</div>
-                  <div className="contact-card-detail">+1 (800) 123-4567</div>
-                  <div className="contact-card-detail" style={{ fontSize: '0.75rem', opacity: 0.6 }}>Mon-Fri, 9am - 6pm EST</div>
+                  <div className="contact-card-title">Mobile Assistance</div>
+                  <div className="contact-card-detail">9893326098</div>
+                  <div className="contact-card-detail" style={{ fontSize: '0.75rem', opacity: 0.6 }}>Direct Hotline Support</div>
                 </div>
                 <div className="contact-card">
                   <div className="contact-card-icon">✉️</div>
                   <div className="contact-card-title">Email Support</div>
-                  <div className="contact-card-detail">support@aurafashion.com</div>
+                  <div className="contact-card-detail">sharmaarjun0206@gmail.com</div>
                   <div className="contact-card-detail" style={{ fontSize: '0.75rem', opacity: 0.6 }}>24/7 Response within 24h</div>
                 </div>
               </div>
@@ -1072,7 +1128,7 @@ function App() {
                 type="button" 
                 className="btn btn-secondary" 
                 style={{ width: '100%', justifyContent: 'center' }}
-                onClick={() => alert("Connecting to a live customer assistance agent... (Simulated Chatroom)")}
+                onClick={() => setIsSupportChatOpen(true)}
               >
                 💬 Launch Live Support Chat
               </button>
@@ -1722,6 +1778,65 @@ function App() {
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Floating Live Chat Widget */}
+      <button 
+        className="chat-widget-btn" 
+        onClick={() => setIsSupportChatOpen(prev => !prev)}
+        title="Aura Help Chat"
+      >
+        💬 {isSupportChatOpen ? 'Close Chat' : 'Help & Support'}
+      </button>
+
+      {isSupportChatOpen && (
+        <div className="chat-window">
+          <div className="chat-window-header">
+            <div className="chat-window-title">
+              <span className="chat-online-dot"></span>
+              <span>✦ AURA Live Support</span>
+            </div>
+            <button 
+              className="close-btn" 
+              style={{ fontSize: '1.2rem' }} 
+              onClick={() => setIsSupportChatOpen(false)}
+            >
+              ×
+            </button>
+          </div>
+          
+          <div className="chat-window-body">
+            {chatMessages.map(msg => (
+              <div key={msg.id} className={`chat-msg ${msg.sender}`}>
+                {msg.text}
+                <span className="chat-msg-time">{msg.time}</span>
+              </div>
+            ))}
+            {isChatTyping && (
+              <div className="chat-typing-indicator">
+                <span>Aura Assistant is typing</span>
+                <div className="chat-typing-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={handleSendChatMessage} className="chat-window-footer">
+            <input 
+              type="text" 
+              className="chat-window-input" 
+              placeholder="Type your question here..."
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+            />
+            <button type="submit" className="chat-send-btn">
+              ➜
+            </button>
+          </form>
         </div>
       )}
 
